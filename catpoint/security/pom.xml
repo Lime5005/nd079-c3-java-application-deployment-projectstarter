@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>catpoint</artifactId>
-        <groupId>com.udacity</groupId>
+        <groupId>com.udacity.catpoint</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -39,7 +39,7 @@
             <version>2.8.7</version>
         </dependency>
         <dependency>
-            <groupId>com.udacity</groupId>
+            <groupId>com.udacity.catpoint</groupId>
             <artifactId>image</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
