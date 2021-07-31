@@ -13,7 +13,11 @@
         <module>security</module>
     </modules>
 
+    <name>catpoint</name>
+    <url>http://www.catpoint.com</url>
+
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
@@ -71,4 +75,13 @@
             </plugins>
         </pluginManagement>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.2.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
