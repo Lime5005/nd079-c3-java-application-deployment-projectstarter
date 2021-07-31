@@ -170,4 +170,37 @@ public class SecurityServiceTest {
         verify(securityRepository, times(1)).setAlarmStatus(AlarmStatus.ALARM);
 
     }
+
+    // For 100% coverage in Class and Method of SecurityService:
+
+    @Test
+    void addStatusListener() {
+        securityService.addStatusListener(statusListener);
+    }
+
+    @Test
+    void removeStatusListener() {
+        securityService.removeStatusListener(statusListener);
+    }
+
+    @Test
+    void addSensor() {
+        securityService.addSensor(sensor);
+    }
+
+    @Test
+    void removeSensor() {
+        securityService.removeSensor(sensor);
+    }
+
+    // Test `else if` in changeSensorActivationStatus():
+    @Test
+    void whenAlarmWhileSensorDeactivated_AlarmStatusShouldBePending() {
+        when(securityRepository.getArmingStatus()).thenReturn(ArmingStatus.DISARMED);
+        when(securityRepository.getAlarmStatus()).thenReturn(AlarmStatus.ALARM);
+        securityService.changeSensorActivationStatus(sensor);
+
+        verify(securityRepository, times(1)).setAlarmStatus(AlarmStatus.PENDING_ALARM);
+    }
+
 }

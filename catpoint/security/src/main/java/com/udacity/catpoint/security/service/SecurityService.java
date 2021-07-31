@@ -21,9 +21,9 @@ import java.util.concurrent.ConcurrentSkipListSet;
  */
 public class SecurityService {
 
-    private ImageService imageService;
-    private SecurityRepository securityRepository;
-    private Set<StatusListener> statusListeners = new HashSet<>();
+    private final ImageService imageService;
+    private final SecurityRepository securityRepository;
+    private final Set<StatusListener> statusListeners = new HashSet<>();
     private Boolean catDetection = false;
 
     public SecurityService(SecurityRepository securityRepository, ImageService imageService) {
@@ -48,7 +48,7 @@ public class SecurityService {
             sensors.forEach(sensor -> changeSensorActivationStatus(sensor, false));
         }
         securityRepository.setArmingStatus(armingStatus);
-        statusListeners.forEach(sl -> sl.sensorStatusChanged());
+        statusListeners.forEach(StatusListener::sensorStatusChanged);
     }
 
     /**
@@ -121,12 +121,12 @@ public class SecurityService {
      * @param sensor
      */
     public void changeSensorActivationStatus(Sensor sensor) {
-        AlarmStatus actualAlarmStatus = this.getAlarmStatus();
-        ArmingStatus actualArmingStatus = this.getArmingStatus();
+        AlarmStatus currentAlarmStatus = this.getAlarmStatus();
+        ArmingStatus currentArmingStatus = this.getArmingStatus();
 
-        if (actualAlarmStatus == AlarmStatus.PENDING_ALARM && !sensor.getActive()) {
+        if (currentAlarmStatus == AlarmStatus.PENDING_ALARM && !sensor.getActive()) {
             handleSensorDeactivated();
-        } else if (actualAlarmStatus == AlarmStatus.ALARM && actualArmingStatus == ArmingStatus.DISARMED) {
+        } else if (currentAlarmStatus == AlarmStatus.ALARM && currentArmingStatus == ArmingStatus.DISARMED) {
             handleSensorDeactivated();
         }
         securityRepository.updateSensor(sensor);
