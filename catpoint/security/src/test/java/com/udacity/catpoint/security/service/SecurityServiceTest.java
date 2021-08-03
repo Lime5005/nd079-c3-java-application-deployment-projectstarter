@@ -158,6 +158,14 @@ public class SecurityServiceTest {
         securityService.getSensors().forEach(sensor -> assertFalse(sensor.getActive()));
     }
 
+    // Test handleSensorActivated():
+    @Test
+    void whenSensorActivated_whileSystemDisArmed_ShouldBeNoChange() {
+        when(securityRepository.getArmingStatus()).thenReturn(ArmingStatus.DISARMED);
+        securityService.changeSensorActivationStatus(sensor, true);
+        verify(securityRepository, never()).setArmingStatus(ArmingStatus.DISARMED);
+    }
+
     //11,If the system is armed-home while the camera shows a cat, set the alarm status to alarm.
     @Test
     void whenArmedHome_whileCatDetected_statusShouldBeAlarm() {
